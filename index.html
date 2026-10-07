@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Study Planner</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-left">
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle sidebar">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <span class="logo">Study Planner</span>
+    </div>
+    <div class="header-right">
+      <span id="currentDate" class="current-date"></span>
+      <button class="btn-icon-header" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
+        <span id="themeIcon">&#9790;</span>
+      </button>
+      <button class="btn btn-primary btn-sm" id="openAddModal">+ Add Task</button>
+    </div>
+  </header>
+
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-profile">
+        <div class="sidebar-avatar" id="sidebarAvatar">S</div>
+        <div class="sidebar-profile-info">
+          <span class="sidebar-name" id="sidebarName">Student</span>
+          <span class="sidebar-course" id="sidebarCourse">Course</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" role="navigation" aria-label="Main navigation">
+        <a href="#" class="nav-item active" data-section="dashboard">
+          <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
+          <span class="nav-label">Dashboard</span>
+        </a>
+        <a href="#" class="nav-item" data-section="tasks">
+          <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/></svg>
+          <span class="nav-label">Tasks</span>
+          <span class="nav-badge" id="navBadgeTasks"></span>
+        </a>
+        <a href="#" class="nav-item" data-section="schedule">
+          <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/></svg>
+          <span class="nav-label">Schedule</span>
+        </a>
+        <a href="#" class="nav-item" data-section="sessions">
+          <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+          <span class="nav-label">Study Sessions</span>
+        </a>
+        <a href="#" class="nav-item" data-section="analytics">
+          <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/></svg>
+          <span class="nav-label">Analytics</span>
+        </a>
+        <a href="#" class="nav-item" data-section="profile">
+          <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>
+          <span class="nav-label">Profile</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <span class="sidebar-version">IBM SkillsBuild · 2025</span>
+      </div>
+    </aside>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- MAIN -->
+    <main class="main" id="main">
+
+      <!-- ═══ DASHBOARD ═══ -->
+      <section class="section" id="section-dashboard">
+
+        <div class="welcome-banner">
+          <div>
+            <h2 class="welcome-greeting" id="welcomeGreeting">Good morning!</h2>
+            <p class="welcome-sub" id="welcomeSub">Ready to make progress today?</p>
+          </div>
+          <div class="welcome-date-badge" id="welcomeDateBadge"></div>
+        </div>
+
+        <div id="remindersStrip" class="reminders-strip" style="display:none;"></div>
+
+        <div class="stats-grid">
+          <div class="stat-card" id="sc-total">
+            <div class="stat-icon-wrap blue">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-number" id="statTotal">0</span>
+              <span class="stat-label">Total Tasks</span>
+            </div>
+          </div>
+          <div class="stat-card" id="sc-done">
+            <div class="stat-icon-wrap green">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-number" id="statDone">0</span>
+              <span class="stat-label">Completed</span>
+            </div>
+          </div>
+          <div class="stat-card" id="sc-pending">
+            <div class="stat-icon-wrap orange">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-number" id="statPending">0</span>
+              <span class="stat-label">Pending</span>
+            </div>
+          </div>
+          <div class="stat-card" id="sc-overdue">
+            <div class="stat-icon-wrap red">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-number" id="statOverdue">0</span>
+              <span class="stat-label">Overdue</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="progress-card">
+          <div class="progress-header">
+            <span class="progress-label">Overall Progress</span>
+            <span class="progress-pct" id="progressPercent">0%</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progressBar" style="width:0%"></div>
+          </div>
+          <p class="progress-footer" id="statProgress">0 of 0 tasks completed</p>
+        </div>
+
+        <div class="quick-actions-bar">
+          <button class="quick-btn quick-btn-blue" id="qaAddTask">+ Add Task</button>
+          <button class="quick-btn quick-btn-navy" id="qaAddSchedule">+ Add Schedule</button>
+          <button class="quick-btn quick-btn-teal" id="qaStartSession">Start Session</button>
+        </div>
+
+        <div class="dashboard-row">
+          <div class="card">
+            <h3 class="card-title">Today's Tasks</h3>
+            <div id="todayTaskList" class="task-list"></div>
+          </div>
+          <div class="card">
+            <h3 class="card-title">High Priority</h3>
+            <div id="highPriorityList" class="task-list"></div>
+          </div>
+        </div>
+
+        <div class="dashboard-row">
+          <div class="card">
+            <h3 class="card-title">Upcoming — Next 7 Days</h3>
+            <div id="upcomingTaskList" class="task-list"></div>
+          </div>
+          <div class="card">
+            <h3 class="card-title">Overdue Tasks</h3>
+            <div id="overdueTaskList" class="task-list"></div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ═══ TASKS ═══ -->
+      <section class="section hidden" id="section-tasks">
+
+        <div class="section-header-row">
+          <h2 class="section-title">All Tasks</h2>
+          <button class="btn btn-primary btn-sm" id="openAddModal2">+ Add Task</button>
+        </div>
+
+        <div class="filter-bar">
+          <div class="filter-search-wrap">
+            <input type="text" id="searchInput" class="filter-input" placeholder="Search subject or topic..." />
+          </div>
+          <select id="filterPriority" class="filter-select">
+            <option value="">All Priorities</option>
+            <option value="High">High Priority</option>
+            <option value="Medium">Medium Priority</option>
+            <option value="Low">Low Priority</option>
+          </select>
+          <select id="filterStatus" class="filter-select">
+            <option value="">All Status</option>
+            <option value="pending">Pending</option>
+            <option value="completed">Completed</option>
+            <option value="overdue">Overdue</option>
+          </select>
+          <select id="filterDate" class="filter-select">
+            <option value="">All Dates</option>
+            <option value="today">Today</option>
+            <option value="tomorrow">Tomorrow</option>
+            <option value="week">This Week</option>
+            <option value="overdue">Overdue</option>
+          </select>
+          <button class="btn btn-ghost" id="clearFilters">Clear</button>
+        </div>
+
+        <div id="allTaskList" class="task-list"></div>
+
+      </section>
+
+      <!-- ═══ SCHEDULE ═══ -->
+      <section class="section hidden" id="section-schedule">
+
+        <div class="section-header-row">
+          <h2 class="section-title">Schedule</h2>
+          <button class="btn btn-primary btn-sm" id="openAddSchedule">+ Add Session</button>
+        </div>
+
+        <div class="tab-bar">
+          <button class="tab-btn active" data-tab="tab-today-sched">Today</button>
+          <button class="tab-btn" data-tab="tab-weekly-sched">Weekly Timetable</button>
+          <button class="tab-btn" data-tab="tab-upcoming-sched">Upcoming</button>
+        </div>
+
+        <div class="tab-panel" id="tab-today-sched">
+          <div id="todayScheduleList" class="schedule-list"></div>
+        </div>
+
+        <div class="tab-panel hidden" id="tab-weekly-sched">
+          <div class="timetable-wrapper">
+            <table class="timetable" id="timetableTable">
+              <thead>
+                <tr>
+                  <th>Slot</th>
+                  <th>Monday</th>
+                  <th>Tuesday</th>
+                  <th>Wednesday</th>
+                  <th>Thursday</th>
+                  <th>Friday</th>
+                  <th>Saturday</th>
+                  <th>Sunday</th>
+                </tr>
+              </thead>
+              <tbody id="timetableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="tab-panel hidden" id="tab-upcoming-sched">
+          <div id="upcomingScheduleList" class="schedule-list"></div>
+        </div>
+
+      </section>
+
+      <!-- ═══ STUDY SESSIONS ═══ -->
+      <section class="section hidden" id="section-sessions">
+
+        <h2 class="section-title">Study Sessions</h2>
+
+        <div class="timer-card">
+          <div class="timer-header">
+            <h3 class="timer-title" id="timerTitle">No active session</h3>
+            <p class="timer-sub" id="timerSub">Start a new study session below.</p>
+          </div>
+          <div class="timer-display" id="timerDisplay">00:00:00</div>
+          <div class="timer-controls">
+            <button class="btn btn-primary" id="btnStartSession">Start Session</button>
+            <button class="btn btn-outline hidden" id="btnPauseSession">Pause</button>
+            <button class="btn btn-outline hidden" id="btnResumeSession">Resume</button>
+            <button class="btn btn-success hidden" id="btnCompleteSession">Complete</button>
+            <button class="btn btn-ghost hidden" id="btnCancelSession">Cancel</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">Session History</h3>
+          <div id="sessionHistory" class="session-list"></div>
+        </div>
+
+      </section>
+
+      <!-- ═══ ANALYTICS ═══ -->
+      <section class="section hidden" id="section-analytics">
+
+        <h2 class="section-title">Analytics</h2>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon-wrap blue">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-number" id="aStatTotal">0</span>
+              <span class="stat-label">Total Tasks</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon-wrap green">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-number" id="aStatDone">0</span>
+              <span class="stat-label">Completed</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon-wrap teal">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-number" id="aStatSessions">0</span>
+              <span class="stat-label">Sessions</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon-wrap purple">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-number" id="aStatTime">0m</span>
+              <span class="stat-label">Study Time</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">Subject Progress</h3>
+          <div id="subjectProgressList" class="subject-progress-list"></div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">Tasks Completed This Week</h3>
+          <div id="weeklyChart" class="weekly-chart"></div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">Priority Breakdown</h3>
+          <div id="priorityBreakdown" class="priority-breakdown"></div>
+        </div>
+
+      </section>
+
+      <!-- ═══ PROFILE ═══ -->
+      <section class="section hidden" id="section-profile">
+
+        <h2 class="section-title">Profile</h2>
+
+        <div class="profile-layout">
+
+          <div class="profile-card">
+            <div class="profile-avatar-big" id="profileAvatarBig">S</div>
+            <h3 class="profile-name" id="profileDisplayName">Student</h3>
+            <p class="profile-meta" id="profileDisplayCourse">Course · Semester</p>
+            <p class="profile-meta secondary" id="profileDisplayCollege">College / University</p>
+          </div>
+
+          <div class="card profile-form-card">
+            <h3 class="card-title">Edit Profile</h3>
+            <form id="profileForm" novalidate>
+              <div class="form-group">
+                <label for="profName">Full Name</label>
+                <input type="text" id="profName" placeholder="e.g. Karthik" />
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="profCourse">Course</label>
+                  <input type="text" id="profCourse" placeholder="e.g. B.Tech CSE" />
+                </div>
+                <div class="form-group">
+                  <label for="profSemester">Semester</label>
+                  <input type="text" id="profSemester" placeholder="e.g. 3rd Semester" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="profCollege">College / University</label>
+                <input type="text" id="profCollege" placeholder="e.g. MIT College of Engineering" />
+              </div>
+              <div class="form-group">
+                <label for="profGoal">Daily Study Goal (hours)</label>
+                <input type="number" id="profGoal" min="1" max="16" placeholder="e.g. 4" />
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Save Profile</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:20px;">
+          <h3 class="card-title">Preferences</h3>
+          <div class="pref-row">
+            <div>
+              <span class="pref-label">Dark Mode</span>
+              <span class="pref-desc">Switch between light and dark theme</span>
+            </div>
+            <label class="toggle-switch" aria-label="Toggle dark mode">
+              <input type="checkbox" id="darkModeToggle" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="false"></div>
+
+  <!-- CONFETTI CANVAS -->
+  <canvas id="confettiCanvas" class="confetti-canvas" aria-hidden="true"></canvas>
+
+  <!-- MODAL: ADD / EDIT TASK -->
+  <div class="modal-overlay hidden" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modalTitle">Add New Task</h3>
+        <button class="modal-close" id="closeModal" aria-label="Close dialog">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="taskForm" novalidate>
+          <input type="hidden" id="taskId" />
+          <div class="form-row">
+            <div class="form-group">
+              <label for="taskSubject">Subject <span class="required">*</span></label>
+              <input type="text" id="taskSubject" placeholder="e.g. Mathematics" required />
+              <span class="field-error" id="errSubject"></span>
+            </div>
+            <div class="form-group">
+              <label for="taskTopic">Topic <span class="required">*</span></label>
+              <input type="text" id="taskTopic" placeholder="e.g. Calculus" required />
+              <span class="field-error" id="errTopic"></span>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="taskDate">Date <span class="required">*</span></label>
+              <input type="date" id="taskDate" required />
+              <span class="field-error" id="errDate"></span>
+            </div>
+            <div class="form-group">
+              <label for="taskTime">Time</label>
+              <input type="time" id="taskTime" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="taskPriority">Priority</label>
+              <select id="taskPriority">
+                <option value="High">High</option>
+                <option value="Medium" selected>Medium</option>
+                <option value="Low">Low</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="taskDuration">Est. Duration</label>
+              <select id="taskDuration">
+                <option value="">Select...</option>
+                <option value="30 min">30 min</option>
+                <option value="1 hour">1 hour</option>
+                <option value="1.5 hours">1.5 hours</option>
+                <option value="2 hours">2 hours</option>
+                <option value="3 hours">3 hours</option>
+                <option value="4+ hours">4+ hours</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="taskNotes">Notes (optional)</label>
+            <textarea id="taskNotes" rows="3" placeholder="Additional notes..."></textarea>
+          </div>
+          <div class="form-group checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="taskCompleted" />
+              <span>Mark as Completed</span>
+            </label>
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn btn-ghost" id="cancelModal">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="saveTaskBtn">Save Task</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: DELETE TASK -->
+  <div class="modal-overlay hidden" id="deleteOverlay" role="dialog" aria-modal="true">
+    <div class="modal modal-sm">
+      <div class="modal-header">
+        <h3>Delete Task</h3>
+        <button class="modal-close" id="closeDelete" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="confirm-text">Are you sure you want to delete this task? This cannot be undone.</p>
+        <div class="modal-actions">
+          <button class="btn btn-ghost" id="cancelDelete">Cancel</button>
+          <button class="btn btn-danger" id="confirmDelete">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD / EDIT SCHEDULE SESSION -->
+  <div class="modal-overlay hidden" id="scheduleModalOverlay" role="dialog" aria-modal="true" aria-labelledby="scheduleModalTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="scheduleModalTitle">Add Study Session</h3>
+        <button class="modal-close" id="closeScheduleModal" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="scheduleForm" novalidate>
+          <input type="hidden" id="scheduleId" />
+          <div class="form-row">
+            <div class="form-group">
+              <label for="schedSubject">Subject <span class="required">*</span></label>
+              <input type="text" id="schedSubject" placeholder="e.g. Physics" required />
+              <span class="field-error" id="errSchedSubject"></span>
+            </div>
+            <div class="form-group">
+              <label for="schedTopic">Topic <span class="required">*</span></label>
+              <input type="text" id="schedTopic" placeholder="e.g. Thermodynamics" required />
+              <span class="field-error" id="errSchedTopic"></span>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="schedDate">Date <span class="required">*</span></label>
+              <input type="date" id="schedDate" required />
+              <span class="field-error" id="errSchedDate"></span>
+            </div>
+            <div class="form-group">
+              <label for="schedTime">Start Time</label>
+              <input type="time" id="schedTime" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="schedDuration">Duration</label>
+              <select id="schedDuration">
+                <option value="30 min">30 min</option>
+                <option value="1 hour" selected>1 hour</option>
+                <option value="1.5 hours">1.5 hours</option>
+                <option value="2 hours">2 hours</option>
+                <option value="3 hours">3 hours</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="schedStatus">Status</label>
+              <select id="schedStatus">
+                <option value="confirmed">Confirmed</option>
+                <option value="tentative">Tentative</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="schedLocation">Location / Mode</label>
+            <input type="text" id="schedLocation" placeholder="e.g. Library / Online" />
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn btn-ghost" id="cancelScheduleModal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Session</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: DELETE SCHEDULE -->
+  <div class="modal-overlay hidden" id="deleteScheduleOverlay" role="dialog" aria-modal="true">
+    <div class="modal modal-sm">
+      <div class="modal-header">
+        <h3>Delete Session</h3>
+        <button class="modal-close" id="closeDeleteSchedule" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="confirm-text">Delete this scheduled session? This cannot be undone.</p>
+        <div class="modal-actions">
+          <button class="btn btn-ghost" id="cancelDeleteSchedule">Cancel</button>
+          <button class="btn btn-danger" id="confirmDeleteSchedule">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: START TIMER SESSION -->
+  <div class="modal-overlay hidden" id="startSessionModal" role="dialog" aria-modal="true">
+    <div class="modal modal-sm">
+      <div class="modal-header">
+        <h3>Start Study Session</h3>
+        <button class="modal-close" id="closeStartSessionModal" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="startSessionForm" novalidate>
+          <div class="form-group">
+            <label for="sesSubject">Subject <span class="required">*</span></label>
+            <input type="text" id="sesSubject" placeholder="e.g. Mathematics" required />
+            <span class="field-error" id="errSesSubject"></span>
+          </div>
+          <div class="form-group">
+            <label for="sesTopic">Topic</label>
+            <input type="text" id="sesTopic" placeholder="e.g. Integration" />
+          </div>
+          <div class="form-group">
+            <label for="sesPlanned">Planned Duration</label>
+            <select id="sesPlanned">
+              <option value="30">30 minutes</option>
+              <option value="60" selected>1 hour</option>
+              <option value="90">1.5 hours</option>
+              <option value="120">2 hours</option>
+            </select>
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn btn-ghost" id="cancelStartSession">Cancel</button>
+            <button type="submit" class="btn btn-primary">Start</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
